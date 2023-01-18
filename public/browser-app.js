@@ -110,12 +110,7 @@ const deleteAllUsers = async () => {
 const downloadDummyFile = async () => {
   window.open(downloadDummyFileUrl);
 };
-
-//event listeners
-fileEl.addEventListener("change", async (e) => {
-  csvFile = e.target.files[0];
-});
-formEl.addEventListener("submit", async (e) => {
+const addUsers = async (e) => {
   e.preventDefault();
   const formData = new FormData();
   formData.append("users", csvFile);
@@ -152,7 +147,14 @@ formEl.addEventListener("submit", async (e) => {
       alertErrorEl.innerHTML = "";
     }, 3000);
   }
-});
+};
+const addCSVFile = async (e) => {
+  csvFile = e.target.files[0];
+};
+
+//event listeners
+fileEl.addEventListener("change", addCSVFile);
+formEl.addEventListener("submit", addUsers);
 distributionBtnEl.addEventListener("click", getAgeDistribution);
 deleteBtn.addEventListener("click", deleteAllUsers);
 downloadBtn.addEventListener("click", downloadDummyFile);
