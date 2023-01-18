@@ -37,7 +37,7 @@ const formAgeDistributionTable = (data) => {
   </table>`;
   } else {
     tableContainerEl.innerHTML =
-      "<p class='text-center fw-semibold fs-4'>No data found, please add users</p>";
+      "<p class='text-center fw-semibold fs-5'>No data found, please add users</p>";
   }
 };
 
