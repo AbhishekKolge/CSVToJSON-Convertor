@@ -1,14 +1,18 @@
 //API endpoints
 const addUsersUrl = "/api/v1/users";
 const getAgeDistributionUrl = "/api/v1/users/age-distribution";
+const deleteAllUsersUrl = "/api/v1/users";
+const downloadDummyFileUrl = "/api/v1/users/file";
 
-//HTML references
+//HTML element references
 const formEl = document.getElementById("form");
 const fileEl = document.getElementById("formFile");
 const alertSuccessEl = document.getElementById("alert-success");
 const alertErrorEl = document.getElementById("alert-danger");
 const tableContainerEl = document.getElementById("table-container");
 const distributionBtnEl = document.getElementById("distribution-btn");
+const deleteBtn = document.getElementById("delete-btn");
+const downloadBtn = document.getElementById("download-btn");
 const loaderEl = document.getElementById("loader");
 
 //global variable to store file
@@ -40,7 +44,6 @@ const formAgeDistributionTable = (data) => {
       "<p class='text-center fw-semibold fs-5'>No data found, please add users</p>";
   }
 };
-
 const getAgeDistribution = async () => {
   loaderEl.classList.remove("d-none");
   try {
@@ -73,12 +76,45 @@ const getAgeDistribution = async () => {
     }, 3000);
   }
 };
+const deleteAllUsers = async () => {
+  loaderEl.classList.remove("d-none");
+  try {
+    const response = await fetch(deleteAllUsersUrl, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error(data.msg);
+    }
+
+    await getAgeDistribution();
+    loaderEl.classList.add("d-none");
+    alertSuccessEl.classList.remove("d-none");
+    alertSuccessEl.innerHTML = "Data deleted successfully";
+
+    setTimeout(() => {
+      alertSuccessEl.classList.add("d-none");
+      alertSuccessEl.innerHTML = "";
+    }, 3000);
+  } catch (err) {
+    loaderEl.classList.add("d-none");
+    alertErrorEl.classList.remove("d-none");
+    alertErrorEl.innerHTML = err.message || "Something went wrong";
+
+    setTimeout(() => {
+      alertErrorEl.classList.add("d-none");
+      alertErrorEl.innerHTML = "";
+    }, 3000);
+  }
+};
+const downloadDummyFile = async () => {
+  window.open(downloadDummyFileUrl);
+};
 
 //event listeners
 fileEl.addEventListener("change", async (e) => {
   csvFile = e.target.files[0];
 });
-
 formEl.addEventListener("submit", async (e) => {
   e.preventDefault();
   const formData = new FormData();
@@ -96,6 +132,8 @@ formEl.addEventListener("submit", async (e) => {
       throw new Error(data.msg);
     }
 
+    e.target.reset();
+    await getAgeDistribution();
     loaderEl.classList.add("d-none");
     alertSuccessEl.classList.remove("d-none");
     alertSuccessEl.innerHTML = "File uploaded successfully";
@@ -115,5 +153,6 @@ formEl.addEventListener("submit", async (e) => {
     }, 3000);
   }
 });
-
 distributionBtnEl.addEventListener("click", getAgeDistribution);
+deleteBtn.addEventListener("click", deleteAllUsers);
+downloadBtn.addEventListener("click", downloadDummyFile);

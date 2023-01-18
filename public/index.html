@@ -11,7 +11,7 @@
 <body class="p-5">
     <main>
         <div class="container">
-            <div class="row">
+            <div class="row d-flex flex-column">
                 <div class="col-5 m-auto">
                     <div id="alert-success" class="alert alert-success d-none" role="alert"></div>
                     <div id="alert-danger" class="alert alert-danger d-none" role="alert"></div>
@@ -28,10 +28,12 @@
                                 <button type="submit" class="btn btn-primary w-100 mt-3">Upload</button>
                             </form>
                             <button type="button" id="distribution-btn" class="btn btn-primary w-100 mt-3">Get Age Distribution</button>
+                            <button type="button" id="delete-btn" class="btn btn-danger w-100 mt-3">Delete All Users</button>
+                            <button type="button" id="download-btn" class="btn btn-success w-100 mt-3">Download Dummy CSV File</button>
                         </div>
                     </div>
                 </div>
-                <div id="table-container" class="5 m-auto mt-3">
+                <div id="table-container" class="m-auto col-5 mt-3">
                 </div>
             </div>
         </div>

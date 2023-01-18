@@ -1,9 +1,7 @@
-const { StatusCodes } = require("http-status-codes");
 const sql = require("sql");
 
 const { connection } = require("../db/connect");
 const CustomError = require("../errors");
-const customUtils = require("../utils");
 
 class Users {
   constructor() {
@@ -57,6 +55,10 @@ class Users {
     let usersInsertQuery = User.insert(this.users).toQuery();
 
     await connection.query(usersInsertQuery);
+  }
+
+  async deleteAll() {
+    await connection.query("DELETE FROM users");
   }
 
   async calculateAgeDistribution() {
