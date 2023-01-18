@@ -9,6 +9,7 @@ const alertSuccessEl = document.getElementById("alert-success");
 const alertErrorEl = document.getElementById("alert-danger");
 const tableContainerEl = document.getElementById("table-container");
 const distributionBtnEl = document.getElementById("distribution-btn");
+const loaderEl = document.getElementById("loader");
 
 //global variable to store file
 let csvFile;
@@ -36,6 +37,7 @@ const formAgeDistributionTable = (data) => {
 };
 
 const getAgeDistribution = async () => {
+  loaderEl.classList.remove("d-none");
   try {
     const response = await fetch(getAgeDistributionUrl);
 
@@ -44,6 +46,8 @@ const getAgeDistribution = async () => {
     if (!response.ok) {
       throw new Error(data.msg);
     }
+
+    loaderEl.classList.add("d-none");
 
     alertSuccessEl.classList.remove("d-none");
     alertSuccessEl.innerHTML = "Data fetched successfully";
@@ -55,6 +59,7 @@ const getAgeDistribution = async () => {
 
     formAgeDistributionTable(data.data);
   } catch (err) {
+    loaderEl.classList.add("d-none");
     alertErrorEl.classList.remove("d-none");
     alertErrorEl.innerHTML = err.message || "Something went wrong";
 
@@ -74,6 +79,7 @@ formEl.addEventListener("submit", async (e) => {
   e.preventDefault();
   const formData = new FormData();
   formData.append("users", csvFile);
+  loaderEl.classList.remove("d-none");
   try {
     const response = await fetch(addUsersUrl, {
       method: "POST",
@@ -86,6 +92,8 @@ formEl.addEventListener("submit", async (e) => {
       throw new Error(data.msg);
     }
 
+    loaderEl.classList.add("d-none");
+
     alertSuccessEl.classList.remove("d-none");
     alertSuccessEl.innerHTML = "File uploaded successfully";
 
@@ -94,6 +102,7 @@ formEl.addEventListener("submit", async (e) => {
       alertSuccessEl.innerHTML = "";
     }, 3000);
   } catch (err) {
+    loaderEl.classList.add("d-none");
     alertErrorEl.classList.remove("d-none");
     alertErrorEl.innerHTML = err.message || "Something went wrong";
 
