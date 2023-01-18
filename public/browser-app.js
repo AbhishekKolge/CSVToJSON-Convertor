@@ -48,7 +48,6 @@ const getAgeDistribution = async () => {
     }
 
     loaderEl.classList.add("d-none");
-
     alertSuccessEl.classList.remove("d-none");
     alertSuccessEl.innerHTML = "Data fetched successfully";
 
@@ -93,7 +92,6 @@ formEl.addEventListener("submit", async (e) => {
     }
 
     loaderEl.classList.add("d-none");
-
     alertSuccessEl.classList.remove("d-none");
     alertSuccessEl.innerHTML = "File uploaded successfully";
 
