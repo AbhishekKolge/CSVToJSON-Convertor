@@ -11,7 +11,7 @@ const readCSVFile = async (file) => {
     createReadStream(file, { encoding: "utf-8" })
       .on("data", (chunk) => {
         //reading each chunk of the file and splitting it in separate row array
-        const chunkArr = chunk.split("\r\n").filter((row) => row);
+        const chunkArr = chunk.split("\n").filter((row) => row);
 
         if (firstChunk) {
           //if row is first in table then add declare it as a header keys
