@@ -16,7 +16,8 @@ let csvFile;
 
 //helper functions
 const formAgeDistributionTable = (data) => {
-  tableContainerEl.innerHTML = `<table class="table">
+  if (data.length) {
+    tableContainerEl.innerHTML = `<table class="table">
     <thead>
         <tr>
             <th scope="col">Age-Group</th>
@@ -34,6 +35,10 @@ const formAgeDistributionTable = (data) => {
       .join("")}
     </tbody>
   </table>`;
+  } else {
+    tableContainerEl.innerHTML =
+      "<p class='text-center fw-semibold fs-4'>No data found, please add users</p>";
+  }
 };
 
 const getAgeDistribution = async () => {
